@@ -1,0 +1,441 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0a0a0f;
+  --color-surface: #12121a;
+  --color-surface-hover: #1a1a28;
+  --color-border: #1e1e30;
+  --color-text-primary: #e8e8ed;
+  --color-text-secondary: #8888a0;
+  --color-text-tertiary: #5c5c78;
+  --color-gold: #d4a853;
+  --color-gold-dim: #a8833a;
+  --color-success: #22c55e;
+  --color-warn: #eab308;
+  --color-danger: #ef4444;
+  --color-accent: #6366f1;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+
+/* ─── Layout Shell ─── */
+.sf-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 48px;
+}
+
+/* ─── Header ─── */
+.sf-header {
+  padding: 24px 0 8px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sf-header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.sf-header-sub {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+/* ─── Tabs ─── */
+.sf-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.sf-tab {
+  background: none;
+  border: none;
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.sf-tab:hover { color: var(--color-text-primary); }
+.sf-tab.active {
+  color: var(--color-gold);
+  border-bottom-color: var(--color-gold);
+}
+
+/* ─── Cards Grid ─── */
+.sf-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.sf-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  transition: border-color 0.15s;
+}
+
+.sf-card:hover { border-color: var(--color-text-tertiary); }
+
+.sf-card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 6px;
+}
+
+.sf-card-value {
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.sf-card-sub {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 4px;
+}
+
+.sf-card-gold .sf-card-value { color: var(--color-gold); }
+.sf-card-success .sf-card-value { color: var(--color-success); }
+.sf-card-warn .sf-card-value { color: var(--color-warn); }
+.sf-card-danger .sf-card-value { color: var(--color-danger); }
+.sf-card-muted .sf-card-value { color: var(--color-text-tertiary); }
+
+/* ─── Table ─── */
+.sf-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.sf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.sf-table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-tertiary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.sf-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.sf-table tr:last-child td { border-bottom: none; }
+.sf-table tr:hover { background: var(--color-surface-hover); }
+
+/* ─── Status Pills ─── */
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--color-surface-hover);
+  color: var(--color-text-secondary);
+}
+
+.status-paid,
+.status-settled,
+.status-completed,
+.status-success { background: rgba(34, 197, 94, 0.12); color: var(--color-success); }
+
+.status-pending,
+.status-processing { background: rgba(234, 179, 8, 0.12); color: var(--color-warn); }
+
+.status-failed,
+.status-rejected { background: rgba(239, 68, 68, 0.12); color: var(--color-danger); }
+
+.status-refunded { background: rgba(99, 102, 241, 0.12); color: var(--color-accent); }
+
+/* ─── Method Pill ─── */
+.method-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--color-surface-hover);
+  color: var(--color-text-secondary);
+}
+
+/* ─── Buttons ─── */
+.sf-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sf-btn:hover { background: var(--color-surface-hover); border-color: var(--color-text-tertiary); }
+.sf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.sf-btn-gold { background: var(--color-gold-dim); color: #fff; border-color: var(--color-gold); }
+.sf-btn-gold:hover { background: var(--color-gold); }
+
+/* ─── Pagination ─── */
+.sf-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.sf-pager-btns { display: flex; gap: 2px; }
+
+.sf-pager-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.sf-pager-btn:hover:not(:disabled) { background: var(--color-surface-hover); }
+.sf-pager-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ─── Filters ─── */
+.sf-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sf-filters input,
+.sf-filters select {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.sf-filters input::placeholder { color: var(--color-text-tertiary); }
+.sf-filters input:focus,
+.sf-filters select:focus { border-color: var(--color-gold); }
+.sf-filters select { cursor: pointer; }
+
+/* ─── Empty State ─── */
+.sf-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+}
+
+.sf-empty i { font-size: 28px; display: block; margin-bottom: 8px; }
+
+/* ─── Section heading ─── */
+.sf-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sf-section-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sf-section-sub {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+/* ─── Warning Banner ─── */
+.sf-warn-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(234, 179, 8, 0.08);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--color-warn);
+  margin-bottom: 20px;
+}
+
+/* ─── Admin Layout ─── */
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sidebar-header {
+  padding: 20px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-sidebar-brand {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-gold);
+}
+
+.admin-sidebar-brand-sub {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+.admin-sidebar-nav {
+  flex: 1;
+  padding: 12px 8px;
+}
+
+.admin-nav-section {
+  margin-bottom: 16px;
+}
+
+.admin-nav-section-title {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  padding: 0 8px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all 0.12s;
+  cursor: pointer;
+}
+
+.admin-nav-item:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.admin-nav-item.active {
+  background: var(--color-surface-hover);
+  color: var(--color-gold);
+}
+
+.admin-nav-item i { font-size: 16px; }
+
+.admin-sidebar-footer {
+  padding: 12px 8px;
+  border-top: 1px solid var(--color-border);
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-main-header {
+  padding: 20px 32px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-main-content {
+  padding: 20px 32px 48px;
+}
+
+.admin-user-badge {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-user-role {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(212, 168, 83, 0.12);
+  color: var(--color-gold);
+}
