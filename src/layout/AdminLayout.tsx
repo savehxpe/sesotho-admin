@@ -17,8 +17,8 @@ export function AdminLayout() {
   const navigate = useNavigate();
   const title = getPageTitle(location.pathname);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate("/admin/login", { replace: true });
   };
 

@@ -6,16 +6,16 @@ export interface AdminAuthContext {
   userEmail: string;
   role: AdminRole;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => { success: boolean; error?: string };
-  logout: () => void;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
 }
 
 const defaultContext: AdminAuthContext = {
   userEmail: "",
   role: "read_only_viewer",
   isAuthenticated: false,
-  login: () => ({ success: false, error: "Auth not initialized" }),
-  logout: () => {},
+  login: async () => ({ success: false, error: "Auth not initialized" }),
+  logout: async () => {},
 };
 
 export const AdminAuthCtx = createContext<AdminAuthContext>(defaultContext);
@@ -30,8 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<AdminRole>(existing?.role ?? "read_only_viewer");
   const [isAuthenticated, setIsAuthenticated] = useState(!!existing);
 
-  const login = useCallback((email: string, password: string) => {
-    const result = authLogin(email, password);
+  const login = useCallback(async (email: string, password: string) => {
+    const result = await authLogin(email, password);
     if (result.success && result.session) {
       setUserEmail(result.session.email);
       setRole(result.session.role);
@@ -40,8 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return result;
   }, []);
 
-  const logout = useCallback(() => {
-    authLogout();
+  const logout = useCallback(async () => {
+    await authLogout();
     setUserEmail("");
     setRole("read_only_viewer");
     setIsAuthenticated(false);
