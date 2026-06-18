@@ -8,7 +8,11 @@ interface StoredSession {
 }
 
 const ADMIN_CREDENTIALS: Record<string, { password: string; role: AdminRole }> = {
-  "team@outworldcreative.com": { password: "admin123", role: "super_admin" },
+  "team@outworldcreative.com": { password: "askmeagain123$", role: "super_admin" },
+  "accounting@sesothofashioning.ls": { password: "accounting123", role: "accounting_admin" },
+  "marketing@sesothofashioning.ls": { password: "marketing123", role: "marketing_admin" },
+  "security@sesothofashioning.ls": { password: "security123", role: "security_admin" },
+  "viewer@sesothofashioning.ls": { password: "viewer123", role: "read_only_viewer" },
 };
 
 export function getStoredSession(): StoredSession | null {
