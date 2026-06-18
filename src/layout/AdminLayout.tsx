@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AdminSidebar } from "./AdminSidebar";
 import { useAdminAuth } from "../shared/rbac/AdminAuthCtx";
 import { ROLE_LABELS } from "../shared/rbac/roles";
@@ -12,9 +12,15 @@ function getPageTitle(pathname: string): string {
 }
 
 export function AdminLayout() {
-  const { role, isAuthenticated } = useAdminAuth();
+  const { userEmail, role, isAuthenticated, logout } = useAdminAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const title = getPageTitle(location.pathname);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/admin/login", { replace: true });
+  };
 
   return (
     <div className="admin-shell">
@@ -25,8 +31,11 @@ export function AdminLayout() {
           <div className="admin-user-badge">
             {isAuthenticated && (
               <>
-                <span>admin@sesothofashioning.ls</span>
+                <span>{userEmail}</span>
                 <span className="admin-user-role">{ROLE_LABELS[role]}</span>
+                <button className="logout-btn" onClick={handleLogout} title="Sign out">
+                  <i className="ti ti-logout" aria-hidden="true" />
+                </button>
               </>
             )}
           </div>

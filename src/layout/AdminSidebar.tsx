@@ -25,7 +25,7 @@ const SECTIONS = [
 ];
 
 export function AdminSidebar() {
-  const { role, isAuthenticated } = useAdminAuth();
+  const { role, isAuthenticated, userEmail } = useAdminAuth();
 
   return (
     <aside className="admin-sidebar">
@@ -63,7 +63,7 @@ export function AdminSidebar() {
         <div style={{ padding: "4px 8px" }}>
           <div style={{ fontSize: "10px", color: "var(--color-text-tertiarity)" }}>Signed in as</div>
           <div style={{ fontSize: "11px", fontWeight: 500, marginTop: "2px" }}>
-            {isAuthenticated ? "admin@sesothofashioning.ls" : "Not signed in"}
+            {isAuthenticated ? userEmail : "Not signed in"}
           </div>
           {isAuthenticated && (
             <span className="admin-user-role">{ROLE_LABELS[role]}</span>
